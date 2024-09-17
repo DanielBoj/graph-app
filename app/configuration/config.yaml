@@ -1,0 +1,11 @@
+title:
+  city_key_enrollment_pie_chart_title: "Ciudadanos inscritos en la Tarjeta Ciudadana"
+  bus_rides_pie_chart_title: "Usos de la Tarjeta Ciudadana para viajar en autobús"
+  activities_pie_chart_title: "Actividades culturales, talleres y cursos"
+
+label:
+  enrolled: "Ciudadanos incritos"
+  not_enrolled: "Ciudadanos no inscritos"
+
+  total_bus_rides: "Total de usos de autobús"
+  in_year_bus_rides: "Usos de autobús en el año"
