@@ -1,11 +1,23 @@
 title:
   city_key_enrollment_pie_chart_title: "Ciudadanos inscritos en la Tarjeta Ciudadana"
-  bus_rides_pie_chart_title: "Usos de la Tarjeta Ciudadana para viajar en autobús"
+  bus_year_rides_pie_chart_title: "Viajes en bus anuales"
+  bus_year_registered_rides_pie_chart_title: "Viajes en bus anuales de ciudadanos inscritos"
+  bus_year_fisical_and_virtual_card_rides_pie_chart_title: "Viajes en bus anuales con tarjeta física o virtual"
+  monthly_bus_rides_bar_chart_title: "Comparativa de viajes mensuales"
+  annual_bus_rides_bar_chart_title: "Comparativa de viajes anuales"
+  dayly_bus_rides_bar_chart_title: "Comparativa de viajes diarios"
+
   activities_pie_chart_title: "Actividades culturales, talleres y cursos"
 
 label:
   enrolled: "Ciudadanos incritos"
   not_enrolled: "Ciudadanos no inscritos"
 
-  total_bus_rides: "Total de usos de autobús"
-  in_year_bus_rides: "Usos de autobús en el año"
+  total_bus_rides: "Total"
+  in_year_bus_rides: "Año actual"
+
+  total_registered_bus_rides: "Total"
+  in_year_registered_bus_rides: "Año actual"
+
+  fisical_card_bus_rides: "Tarjeta física"
+  virtual_card_bus_rides: "Tarjeta virtual"
