@@ -54,11 +54,11 @@ def bus_year_rides_pie_chart():
 def bus_year_registered_rides_pie_chart():
 
     payload = request.get_json()
-    total_registered_rides = int(payload['totalRegisteredRides'])
+    in_year_not_registered_rides = int(payload['inYearNotRegisteredRides'])
     in_year_registered_rides = int(payload['inYearRegisteredRides'])
 
-    labels = [config['label']['total_registered_bus_rides'], config['label']['in_year_registered_bus_rides']]
-    values = [total_registered_rides, in_year_registered_rides]
+    labels = [config['label']['in_year_not_registered_rides'], config['label']['in_year_registered_bus_rides']]
+    values = [in_year_not_registered_rides, in_year_registered_rides]
 
     layout = go.Layout(title=config['title']['bus_year_registered_rides_pie_chart_title'])
 

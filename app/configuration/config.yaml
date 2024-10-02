@@ -16,8 +16,8 @@ label:
   total_bus_rides: "Total"
   in_year_bus_rides: "Año actual"
 
-  total_registered_bus_rides: "Total"
-  in_year_registered_bus_rides: "Año actual"
+  in_year_not_registered_rides: "Usuarios no censados"
+  in_year_registered_bus_rides: "Usuarios censados"
 
   fisical_card_bus_rides: "Tarjeta física"
   virtual_card_bus_rides: "Tarjeta virtual"
