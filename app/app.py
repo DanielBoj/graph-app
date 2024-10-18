@@ -1,11 +1,13 @@
 from flask import Flask, render_template
 from domain.stats_graphics import api_blueprint
+from domain.app_version_handler import app_version_api_blueprint
 import markdown as md
 
 def create_app():
 
     app = Flask(__name__, template_folder = './presentation/templates', static_folder = './static')
     app.register_blueprint(api_blueprint)
+    app.register_blueprint(app_version_api_blueprint)
 
     @app.route('/')
     def index():

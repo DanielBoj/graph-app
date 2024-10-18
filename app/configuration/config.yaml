@@ -1,3 +1,7 @@
+app_version:
+  version: "1.0.0"
+  date: "2021-06-01"
+
 title:
   city_key_enrollment_pie_chart_title: "Ciudadanos inscritos en la Tarjeta Ciudadana"
   bus_year_rides_pie_chart_title: "Viajes en bus anuales"
