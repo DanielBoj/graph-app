@@ -1,6 +1,6 @@
 app_version:
-  version: "1.0.0"
-  date: "2021-06-01"
+  version: "0.0.1"
+  date: "18-10-2024"
 
 title:
   city_key_enrollment_pie_chart_title: "Ciudadanos inscritos en la Tarjeta Ciudadana"
@@ -10,6 +10,8 @@ title:
   monthly_bus_rides_bar_chart_title: "Comparativa de viajes mensuales"
   annual_bus_rides_bar_chart_title: "Comparativa de viajes anuales"
   dayly_bus_rides_bar_chart_title: "Comparativa de viajes diarios"
+  daily_by_month_bus_rides_bar_chart_title: "Comparativa de viajes diarios durante el mes"
+  weekly_bus_rides_bar_chart_title: "Comparativa de viajes durante la semana"
 
   activities_pie_chart_title: "Actividades culturales, talleres y cursos"
 

@@ -11,6 +11,7 @@ kaleido = "*"
 gunicorn = "*"
 dnspython = "*"
 markdown = "*"
+pandas = "*"
 
 [dev-packages]
 
