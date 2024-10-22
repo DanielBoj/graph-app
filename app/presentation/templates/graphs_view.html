@@ -3,17 +3,13 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Test Endpoint</title>
+    <title>Graphs View</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h1>Test Endpoint</h1>
-    <div id="plotly"></div>
-    <script>
-        var graphJSON = {{ graphs | safe }};
-        Plotly.newPlot('plotly', graphJSON.data, graphJSON.layout);
-    </script>
+    <h1>Test</h1>
+    <div id="plotly">{{ graphs | safe }}</div>
 </body>
 </html>

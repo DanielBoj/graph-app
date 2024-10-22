@@ -178,16 +178,9 @@ def daily_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
 
-    # layout = go.Layout(template=plotly_template, title=config['title']['dayly_bus_rides_bar_chart_title'])
-
-    # bar_graph = go.Bar(x=day_hours, y=values)
-    # fig = go.Figure(data=[bar_graph], layout=layout)
     graph_json = fig.to_json()
-
-    # img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
     graph_html = fig.to_html(full_html=False)
-    # return Response(img_bytes, mimetype='image/svg')
-    return render_template('graphs_view.html', graphs=graph_json)	
+    return render_template('graphs_view.html', graphs=graph_html)	
 
 
 def test():
