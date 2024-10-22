@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Multiple Graphs View</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    {% for graph in graphs %}
+        <div id="plotly{{ loop.index }}"></div>
+    {% endfor %}
+
+    {% for graph in graphs %}
+        <script>
+            var graph{{ loop.index }} = {{ graph | safe }};
+            Plotly.newPlot('plotly{{ loop.index }}', graph{{ loop.index }}.data, graph{{ loop.index }}.layout);
+        </script>
+    {% endfor %}
+</body>
+</html>

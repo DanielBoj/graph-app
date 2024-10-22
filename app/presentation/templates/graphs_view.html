@@ -9,7 +9,10 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h1>Test</h1>
-    <div id="plotly">{{ graphs | safe }}</div>
+    <div id="plotly"></div>
+    <script>
+        var graph = {{ graph | safe }};
+        Plotly.newPlot('plotly', graph.data, graph.layout);
+    </script>
 </body>
 </html>

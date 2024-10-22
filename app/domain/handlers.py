@@ -40,55 +40,41 @@ def city_key_enrollment_pie_chart():
 def bus_year_rides_pie_chart():
 
     payload = request.get_json()
-    total_rides = int(payload['totalRides'])
-    in_year_rides = int(payload['inYearRides'])
+    total_rides = payload.get('totalRides', 0)
+    in_year_rides = payload.get('inYearRides', 0)
+    total_registered = payload.get('totalRegistered', 0)
+    total_not_registered = payload.get('totalNotRegistered', 0)
+    total_fisical_card = payload.get('totalFisicalCardRides', 0)
+    total_virtual_card = payload.get('totalVirtualCardRides', 0)
 
-    labels = [config['label']['total_bus_rides'], config['label']['in_year_bus_rides']]
-    values = [total_rides, in_year_rides]
+    # 1st Pie Chart -> Total Bus Rides and InYear Bus Rides
+    labels1 = [config['label']['total_bus_rides'], config['label']['in_year_bus_rides']]
+    values1 = [total_rides, in_year_rides]
 
-    layout = go.Layout(title=config['title']['bus_year_rides_pie_chart_title'])
+    year_pie_fig = px.pie(names=labels1, values=values1, title=config['title']['bus_year_rides_pie_chart_title'])
+    year_pie_fig.update_layout(template=plotly_template)
 
-    pie_graph = go.Pie(labels=labels, values=values)
-    fig = go.Figure(data=[pie_graph], layout=layout)
+    # 2nd Pie Chart -> Registered and Not Registered Bus Rides
+    labels2 = [config['label']['in_year_registered_bus_rides'], config['label']['in_year_not_registered_rides']]
+    values2 = [total_registered, total_not_registered]
 
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    registered_pie_fig = px.pie(names=labels2, values=values2, title=config['title']['bus_year_registered_rides_pie_chart_title'])
+    registered_pie_fig.update_layout(template=plotly_template)
 
+    # 3rd Pie Chart -> Fisical and Virtual Card Bus Rides
+    labels3 = [config['label']['fisical_card_bus_rides'], config['label']['virtual_card_bus_rides']]
+    values3 = [total_fisical_card, total_virtual_card]
 
-def bus_year_registered_rides_pie_chart():
+    card_type_pie_fig = px.pie(names=labels3, values=values3, title=config['title']['bus_year_fisical_and_virtual_card_rides_pie_chart_title'])
+    card_type_pie_fig.update_layout(template=plotly_template)
 
-    payload = request.get_json()
-    in_year_not_registered_rides = int(payload['inYearNotRegisteredRides'])
-    in_year_registered_rides = int(payload['inYearRegisteredRides'])
+    graphs_list = [
+        year_pie_fig.to_json(), 
+        registered_pie_fig.to_json(), 
+        card_type_pie_fig.to_json()
+    ]
 
-    labels = [config['label']['in_year_not_registered_rides'], config['label']['in_year_registered_bus_rides']]
-    values = [in_year_not_registered_rides, in_year_registered_rides]
-
-    layout = go.Layout(title=config['title']['bus_year_registered_rides_pie_chart_title'])
-
-    pie_graph = go.Pie(labels=labels, values=values)
-    fig = go.Figure(data=[pie_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
-
-
-def bus_year_fisical_and_virtual_card_rides_pie_chart():
-    
-    payload = request.get_json()
-    total_fisical_card_rides = int(payload['totalFisicalCardRides'])
-    total_virtual_card_rides = int(payload['totalVirtualCardRides'])
-
-    labels = [config['label']['fisical_card_bus_rides'], config['label']['virtual_card_bus_rides']]
-    values = [total_fisical_card_rides, total_virtual_card_rides]
-
-    layout = go.Layout(title=config['title']['bus_year_fisical_and_virtual_card_rides_pie_chart_title'])
-
-    pie_graph = go.Pie(labels=labels, values=values)
-    fig = go.Figure(data=[pie_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def annual_bus_rides_bar_chart():
@@ -101,13 +87,15 @@ def annual_bus_rides_bar_chart():
     years = [str(actual_year - len(rides) + i + 1) for i in range(len(rides))]
     values = [int(ride) for ride in rides]
 
-    layout = go.Layout(title=config['title']['annual_bus_rides_bar_chart_title'])
-
-    bar_graph = go.Bar(x=years, y=values)
-    fig = go.Figure(data=[bar_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    fig = px.bar(x=years, y=values, title=config['title']['annual_bus_rides_bar_chart_title'])
+    fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Año', 
+        yaxis_title='Viajes'
+        )
+    
+    graph_json = fig.to_json()
+    return render_template('graphs_view.html', graph=graph_json)
 
 
 def monthly_bus_rides_bar_chart():
@@ -118,13 +106,15 @@ def monthly_bus_rides_bar_chart():
     month_names = list(calendar.month_abbr)[1:]
     values = [int(ride) for ride in rides]
 
-    layout = go.Layout(title=config['title']['monthly_bus_rides_bar_chart_title'])
-
-    bar_graph = go.Bar(x=month_names, y=values)
-    fig = go.Figure(data=[bar_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    fig = px.bar(x=month_names, y=values, title=config['title']['monthly_bus_rides_bar_chart_title'])
+    fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Mes', 
+        yaxis_title='Viajes'
+        )
+    
+    graph_json = fig.to_json()
+    return render_template('graphs_view.html', graph=graph_json)
 
 
 def daily_by_month_bus_rides_bar_chart():
@@ -135,13 +125,15 @@ def daily_by_month_bus_rides_bar_chart():
     days_of_the_month = [str(i) for i in range(1, len(rides) + 1)]
     values = [int(ride) for ride in rides]
 
-    layout = go.Layout(title=config['title']['daily_by_month_bus_rides_bar_chart_title'])
-
-    bar_graph = go.Bar(x=days_of_the_month, y=values)
-    fig = go.Figure(data=[bar_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    fig = px.bar(x=days_of_the_month, y=values, title=config['title']['daily_by_month_bus_rides_bar_chart_title'])
+    fig.update_layout(
+        template=plotly_template,
+        xaxis_title='Día del mes',
+        yaxis_title='Viajes'
+        )
+    
+    graph_json = fig.to_json()
+    return render_template('graphs_view.html', graph=graph_json)
 
 
 def weekly_bus_rides_bar_chart():
@@ -153,13 +145,15 @@ def weekly_bus_rides_bar_chart():
     days_of_the_week_names = list(calendar.day_abbr)[1:]
     values = [int(ride) for ride in limited_rides]
 
-    layout = go.Layout(title=config['title']['weekly_bus_rides_bar_chart_title'])
-
-    bar_graph = go.Bar(x=days_of_the_week_names, y=values)
-    fig = go.Figure(data=[bar_graph], layout=layout)
-
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='image/svg')
+    fig = px.bar(x=days_of_the_week_names, y=values, title=config['title']['weekly_bus_rides_bar_chart_title'])
+    fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Día de la semana', 
+        yaxis_title='Viajes'
+        )
+    
+    graph_json = fig.to_json()
+    return render_template('graphs_view.html', graph=graph_json)
 
 
 def daily_bus_rides_bar_chart():
@@ -179,8 +173,7 @@ def daily_bus_rides_bar_chart():
         )
 
     graph_json = fig.to_json()
-    graph_html = fig.to_html(full_html=False)
-    return render_template('graphs_view.html', graphs=graph_html)	
+    return render_template('graphs_view.html', graph=graph_json)	
 
 
 def test():
