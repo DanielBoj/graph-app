@@ -17,6 +17,7 @@ locale.setlocale(
     )
 
 plotly_template = "seaborn"
+common_size = dict(width=350)
 
 def city_key_enrollment_pie_chart():
 
@@ -28,13 +29,11 @@ def city_key_enrollment_pie_chart():
     labels = [config['label']['enrolled'], config['label']['not_enrolled']]
     values = [total_enrollment, not_enrolled]
 
-    layout = go.Layout(title=config['title']['city_key_enrollment_pie_chart_title'].format(total_enrollment, total_citizens))
-
-    pie_graph = go.Pie(labels=labels, values=values)
-    fig = go.Figure(data=[pie_graph], layout=layout)
+    fig = px.pie(names=labels, values=values, title=config['title']['city_key_enrollment_pie_chart_title'])
+    fig.update_layout(template=plotly_template, **common_size)
     
-    img_bytes = fig.to_image(format='svg', engine='kaleido', scale=3)
-    return Response(img_bytes, mimetype='media/svg')
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def bus_year_rides_pie_chart():
@@ -47,7 +46,6 @@ def bus_year_rides_pie_chart():
     total_fisical_card = payload.get('totalFisicalCardRides', 0)
     total_virtual_card = payload.get('totalVirtualCardRides', 0)
 
-    common_size = dict(width=400, height=400)
 
     # 1st Pie Chart -> Total Bus Rides and InYear Bus Rides
     labels1 = [config['label']['total_bus_rides'], config['label']['in_year_bus_rides']]
@@ -93,7 +91,8 @@ def annual_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Año', 
-        yaxis_title='Viajes'
+        yaxis_title='Viajes',
+        **common_size
         )
     
     graphs_list = [fig.to_json()]
@@ -112,7 +111,8 @@ def monthly_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Mes', 
-        yaxis_title='Viajes'
+        yaxis_title='Viajes',
+        **common_size
         )
     
     graphs_list = [fig.to_json()]
@@ -131,7 +131,8 @@ def daily_by_month_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template,
         xaxis_title='Día del mes',
-        yaxis_title='Viajes'
+        yaxis_title='Viajes',
+        **common_size
         )
     
     graphs_list = [fig.to_json()]
@@ -152,6 +153,7 @@ def weekly_bus_rides_bar_chart():
         template=plotly_template, 
         xaxis_title='Día de la semana', 
         yaxis_title='Viajes'
+        **common_size
         )
     
     graphs_list = [fig.to_json()]
@@ -171,7 +173,8 @@ def daily_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Hora', 
-        yaxis_title='Viajes'
+        yaxis_title='Viajes',
+        **common_size
         )
 
     graphs_list = [fig.to_json()]
