@@ -47,26 +47,28 @@ def bus_year_rides_pie_chart():
     total_fisical_card = payload.get('totalFisicalCardRides', 0)
     total_virtual_card = payload.get('totalVirtualCardRides', 0)
 
+    common_size = dict(width=400, height=400)
+
     # 1st Pie Chart -> Total Bus Rides and InYear Bus Rides
     labels1 = [config['label']['total_bus_rides'], config['label']['in_year_bus_rides']]
     values1 = [total_rides, in_year_rides]
 
     year_pie_fig = px.pie(names=labels1, values=values1, title=config['title']['bus_year_rides_pie_chart_title'])
-    year_pie_fig.update_layout(template=plotly_template)
+    year_pie_fig.update_layout(template=plotly_template, **common_size)
 
     # 2nd Pie Chart -> Registered and Not Registered Bus Rides
     labels2 = [config['label']['in_year_registered_bus_rides'], config['label']['in_year_not_registered_rides']]
     values2 = [total_registered, total_not_registered]
 
     registered_pie_fig = px.pie(names=labels2, values=values2, title=config['title']['bus_year_registered_rides_pie_chart_title'])
-    registered_pie_fig.update_layout(template=plotly_template)
+    registered_pie_fig.update_layout(template=plotly_template, **common_size)
 
     # 3rd Pie Chart -> Fisical and Virtual Card Bus Rides
     labels3 = [config['label']['fisical_card_bus_rides'], config['label']['virtual_card_bus_rides']]
     values3 = [total_fisical_card, total_virtual_card]
 
     card_type_pie_fig = px.pie(names=labels3, values=values3, title=config['title']['bus_year_fisical_and_virtual_card_rides_pie_chart_title'])
-    card_type_pie_fig.update_layout(template=plotly_template)
+    card_type_pie_fig.update_layout(template=plotly_template, **common_size)
 
     graphs_list = [
         year_pie_fig.to_json(), 
@@ -94,8 +96,8 @@ def annual_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
     
-    graph_json = fig.to_json()
-    return render_template('graphs_view.html', graph=graph_json)
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def monthly_bus_rides_bar_chart():
@@ -113,8 +115,8 @@ def monthly_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
     
-    graph_json = fig.to_json()
-    return render_template('graphs_view.html', graph=graph_json)
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def daily_by_month_bus_rides_bar_chart():
@@ -132,8 +134,8 @@ def daily_by_month_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
     
-    graph_json = fig.to_json()
-    return render_template('graphs_view.html', graph=graph_json)
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def weekly_bus_rides_bar_chart():
@@ -152,8 +154,8 @@ def weekly_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
     
-    graph_json = fig.to_json()
-    return render_template('graphs_view.html', graph=graph_json)
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
 def daily_bus_rides_bar_chart():
@@ -172,8 +174,8 @@ def daily_bus_rides_bar_chart():
         yaxis_title='Viajes'
         )
 
-    graph_json = fig.to_json()
-    return render_template('graphs_view.html', graph=graph_json)	
+    graphs_list = [fig.to_json()]
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)	
 
 
 def test():
