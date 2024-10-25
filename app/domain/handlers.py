@@ -105,7 +105,10 @@ def monthly_bus_rides_bar_chart():
     while len(rides) < 12:
         rides.append(0)
 
-    month_names = list(calendar.month_abbr)[1:]
+    if locale.getlocale()[0] == 'es_ES':
+        month_names = short_months['es']
+    else:
+        month_names = short_months['en']
     values = [int(ride) for ride in rides]
 
     fig = px.bar(x=month_names, y=values, title=config['title']['monthly_bus_rides_bar_chart_title'])
@@ -147,7 +150,10 @@ def weekly_bus_rides_bar_chart():
     while len(limited_rides) < 7:
         limited_rides.append(0)
 
-    days_of_the_week_names = list(calendar.day_abbr)[0:]
+    if locale.getlocale()[0] == 'es_ES':
+        days_of_the_week_names = days['es']
+    else:
+        days_of_the_week_names = days['en']
     values = [int(ride) for ride in limited_rides]
 
     fig = px.bar(x=days_of_the_week_names, y=values, title=config['title']['weekly_bus_rides_bar_chart_title'])
@@ -179,6 +185,22 @@ def daily_bus_rides_bar_chart():
 
     graphs_list = [fig.to_json()]
     return render_template('multiple_graphs_view.html', graphs=graphs_list)	
+
+
+days = {
+    'es': ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+    'en': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+}
+
+months = {
+    'es': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    'en': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+}
+
+short_months = {
+    'es': ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    'en': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+}
 
 
 def test():
