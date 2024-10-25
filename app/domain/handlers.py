@@ -17,7 +17,6 @@ locale.setlocale(
     )
 
 plotly_template = "seaborn"
-common_size = dict(width=350)
 
 def city_key_enrollment_pie_chart():
 
@@ -30,7 +29,7 @@ def city_key_enrollment_pie_chart():
     values = [total_enrollment, not_enrolled]
 
     fig = px.pie(names=labels, values=values, title=config['title']['city_key_enrollment_pie_chart_title'])
-    fig.update_layout(template=plotly_template, **common_size)
+    fig.update_layout(template=plotly_template)
     
     graphs_list = [fig.to_json()]
     return render_template('multiple_graphs_view.html', graphs=graphs_list)
@@ -52,21 +51,21 @@ def bus_year_rides_pie_chart():
     values1 = [total_rides, in_year_rides]
 
     year_pie_fig = px.pie(names=labels1, values=values1, title=config['title']['bus_year_rides_pie_chart_title'])
-    year_pie_fig.update_layout(template=plotly_template, **common_size)
+    year_pie_fig.update_layout(template=plotly_template)
 
     # 2nd Pie Chart -> Registered and Not Registered Bus Rides
     labels2 = [config['label']['in_year_registered_bus_rides'], config['label']['in_year_not_registered_rides']]
     values2 = [total_registered, total_not_registered]
 
     registered_pie_fig = px.pie(names=labels2, values=values2, title=config['title']['bus_year_registered_rides_pie_chart_title'])
-    registered_pie_fig.update_layout(template=plotly_template, **common_size)
+    registered_pie_fig.update_layout(template=plotly_template)
 
     # 3rd Pie Chart -> Fisical and Virtual Card Bus Rides
     labels3 = [config['label']['fisical_card_bus_rides'], config['label']['virtual_card_bus_rides']]
     values3 = [total_fisical_card, total_virtual_card]
 
     card_type_pie_fig = px.pie(names=labels3, values=values3, title=config['title']['bus_year_fisical_and_virtual_card_rides_pie_chart_title'])
-    card_type_pie_fig.update_layout(template=plotly_template, **common_size)
+    card_type_pie_fig.update_layout(template=plotly_template)
 
     graphs_list = [
         year_pie_fig.to_json(), 
@@ -91,8 +90,7 @@ def annual_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Año', 
-        yaxis_title='Viajes',
-        **common_size
+        yaxis_title='Viajes'
         )
     
     graphs_list = [fig.to_json()]
@@ -104,6 +102,9 @@ def monthly_bus_rides_bar_chart():
     payload = request.get_json()
     rides = payload['rides']
 
+    while len(rides) < 12:
+        rides.append(0)
+
     month_names = list(calendar.month_abbr)[1:]
     values = [int(ride) for ride in rides]
 
@@ -111,8 +112,7 @@ def monthly_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Mes', 
-        yaxis_title='Viajes',
-        **common_size
+        yaxis_title='Viajes'
         )
     
     graphs_list = [fig.to_json()]
@@ -131,8 +131,7 @@ def daily_by_month_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template,
         xaxis_title='Día del mes',
-        yaxis_title='Viajes',
-        **common_size
+        yaxis_title='Viajes'
         )
     
     graphs_list = [fig.to_json()]
@@ -145,7 +144,10 @@ def weekly_bus_rides_bar_chart():
     rides = payload['rides']
     limited_rides = rides[:7]
 
-    days_of_the_week_names = list(calendar.day_abbr)[1:]
+    while len(limited_rides) < 7:
+        limited_rides.append(0)
+
+    days_of_the_week_names = list(calendar.day_abbr)[0:]
     values = [int(ride) for ride in limited_rides]
 
     fig = px.bar(x=days_of_the_week_names, y=values, title=config['title']['weekly_bus_rides_bar_chart_title'])
@@ -153,7 +155,6 @@ def weekly_bus_rides_bar_chart():
         template=plotly_template, 
         xaxis_title='Día de la semana', 
         yaxis_title='Viajes'
-        **common_size
         )
     
     graphs_list = [fig.to_json()]
@@ -173,8 +174,7 @@ def daily_bus_rides_bar_chart():
     fig.update_layout(
         template=plotly_template, 
         xaxis_title='Hora', 
-        yaxis_title='Viajes',
-        **common_size
+        yaxis_title='Viajes'
         )
 
     graphs_list = [fig.to_json()]
