@@ -18,20 +18,91 @@ locale.setlocale(
 
 plotly_template = "seaborn"
 
-def city_key_enrollment_pie_chart():
+def city_key_enrollment_graphs():
 
     payload = request.get_json()
-    total_enrollment = int(payload['totalEnrollment'])
-    total_citizens = int(payload['totalCitizens'])
-    not_enrolled = total_citizens - total_enrollment
+    total_registered_enrollments = payload.get('totalYearRegisteredEnrollments', 0)
+    total_not_registered_enrollments = payload.get('totalYearNotRegisteredEnrollments', 0)
 
-    labels = [config['label']['enrolled'], config['label']['not_enrolled']]
-    values = [total_enrollment, not_enrolled]
+    yearly_enrollment = payload['yearlyEnrollment']
+    while len(yearly_enrollment) < 12:
+        yearly_enrollment.append(0)
 
-    fig = px.pie(names=labels, values=values, title=config['title']['city_key_enrollment_pie_chart_title'])
-    fig.update_layout(template=plotly_template)
+    monthly_enrollment = payload['monthlyEnrollment']
+
+    weekly_enrollment = payload['weeklyEnrollment']
+    while len(weekly_enrollment) < 7:
+        weekly_enrollment.append(0)
+
+    daily_enrollment = payload['dailyEnrollment']
+
+    # 1st Pie Chart -> Total Enrollments and Not Enrollments
+    labels1 = [config['label']['registered'], config['label']['not_registered']]
+    values1 = [total_registered_enrollments, total_not_registered_enrollments]
+
+    total_pie_fig = px.pie(names=labels1, values=values1, title=config['title']['city_key_enrollment_pie_chart_title'])
+    total_pie_fig.update_traces(textinfo='value', hovertemplate='%{value}')
+    total_pie_fig.add_annotation(
+        text=f"Total: {total_registered_enrollments + total_not_registered_enrollments}",
+        showarrow=False,
+        x=0.75,
+        y=0.0
+    )
+
+    total_pie_fig.update_layout(template=plotly_template)
+
+    # 2nd Bar Chart -> In year monthly enrollments
+    month_names = months['es']
+    values2 = [int(enrollment) for enrollment in yearly_enrollment]
+
+    yearly_bar_fig = px.bar(x=month_names, y=values2, title=config['title']['city_key_yearly_enrollment_bar_chart_title'])
+    yearly_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Mes', 
+        yaxis_title='Inscripciones'
+        )
     
-    graphs_list = [fig.to_json()]
+    # 3rd Bar Chart -> In month daily enrollments
+    days_of_the_month = [str(i) for i in range(1, len(daily_enrollment) + 1)]
+    values3 = [int(enrollment) for enrollment in monthly_enrollment]
+
+    daily_bar_fig = px.bar(x=days_of_the_month, y=values3, title=config['title']['city_key_daily_enrollment_bar_chart_title'])
+    daily_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Día del mes', 
+        yaxis_title='Inscripciones'
+        )
+    
+    # 4th Bar Chart -> In week daily enrollments
+    days_of_the_week = days['es']
+    values4 = [int(enrollment) for enrollment in weekly_enrollment]
+
+    weekly_bar_fig = px.bar(x=days_of_the_week, y=values4, title=config['title']['city_key_weekly_enrollment_bar_chart_title'])
+    weekly_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Día de la semana', 
+        yaxis_title='Inscripciones'
+        )
+    
+    # 5th Bar Chart -> In day enrollment
+    day_hours = [f"{hour:02d}h" for hour in range(24)]
+    values5 = [int(daily_enrollment[i]) if i < len(daily_enrollment) else 0 for i in range(24)]
+
+    day_bar_fig = px.bar(x=day_hours, y=values5, title=config['title']['city_key_dayly_enrollment_bar_chart_title'])
+    day_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Hora', 
+        yaxis_title='Inscripciones'
+        )
+    
+    graphs_list = [
+        total_pie_fig.to_json(), 
+        yearly_bar_fig.to_json(), 
+        daily_bar_fig.to_json(), 
+        weekly_bar_fig.to_json(), 
+        day_bar_fig.to_json()
+    ]
+
     return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 

@@ -4,6 +4,11 @@ app_version:
 
 title:
   city_key_enrollment_pie_chart_title: "Ciudadanos inscritos en la Tarjeta Ciudadana"
+  city_key_yearly_enrollment_bar_chart_title: "Inscripciones mensuales durante el año en la Tarjeta Ciudadana"
+  city_key_daily_enrollment_bar_chart_title: "Inscripciones diarias durante el mes en la Tarjeta Ciudadana"
+  city_key_weekly_enrollment_bar_chart_title: "Inscripciones diarias durante la semana en la Tarjeta Ciudadana"
+  city_key_dayly_enrollment_bar_chart_title: "Inscripciones del día en la Tarjeta Ciudadana"
+
   bus_year_rides_pie_chart_title: "Viajes en bus anuales"
   bus_year_registered_rides_pie_chart_title: "Viajes en bus anuales de ciudadanos inscritos"
   bus_year_fisical_and_virtual_card_rides_pie_chart_title: "Viajes en bus anuales con tarjeta física o virtual"
@@ -16,8 +21,8 @@ title:
   activities_pie_chart_title: "Actividades culturales, talleres y cursos"
 
 label:
-  enrolled: "Ciudadanos incritos"
-  not_enrolled: "Ciudadanos no inscritos"
+  registered: "Ciudadanos empadronados"
+  not_registered: "Ciudadanos no empadronados"
 
   total_bus_rides: "Total"
   in_year_bus_rides: "Año actual"
