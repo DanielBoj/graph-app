@@ -63,11 +63,11 @@ def city_key_enrollment_graphs():
         )
     
     # 3rd Bar Chart -> In month daily enrollments
-    days_of_the_month = [str(i) for i in range(1, len(daily_enrollment) + 1)]
+    days_of_the_month = [str(i) for i in range(1, len(monthly_enrollment) + 1)]
     values3 = [int(enrollment) for enrollment in monthly_enrollment]
 
-    daily_bar_fig = px.bar(x=days_of_the_month, y=values3, title=config['title']['city_key_daily_enrollment_bar_chart_title'])
-    daily_bar_fig.update_layout(
+    monthly_bar_fig = px.bar(x=days_of_the_month, y=values3, title=config['title']['city_key_daily_enrollment_bar_chart_title'])
+    monthly_bar_fig.update_layout(
         template=plotly_template, 
         xaxis_title='Día del mes', 
         yaxis_title='Inscripciones'
@@ -98,7 +98,7 @@ def city_key_enrollment_graphs():
     graphs_list = [
         total_pie_fig.to_json(), 
         yearly_bar_fig.to_json(), 
-        daily_bar_fig.to_json(), 
+        monthly_bar_fig.to_json(), 
         weekly_bar_fig.to_json(), 
         day_bar_fig.to_json()
     ]
