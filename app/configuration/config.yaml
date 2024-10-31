@@ -12,6 +12,9 @@ title:
   daily_by_month_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas diarios durante el mes"
   weekly_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas durante la semana"
   daily_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas diarios"
+  courses_and_workshops_status_pie_chart_title: "Estado anual de los cursos y talleres"
+  courses_and_workshops_pie_chart_title: "Cursos y Talleres"
+
 
   bus_year_rides_pie_chart_title: "Viajes en bus anuales"
   bus_year_registered_rides_pie_chart_title: "Viajes en bus anuales de ciudadanos inscritos"
@@ -36,3 +39,8 @@ label:
 
   fisical_card_bus_rides: "Tarjeta física"
   virtual_card_bus_rides: "Tarjeta virtual"
+
+  ended_courses: "Finalizados"
+  on_going_courses: "En curso"
+  payed_courses: "De pago"
+  free_courses: "Gratuitos"

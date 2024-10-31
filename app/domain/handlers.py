@@ -1,5 +1,6 @@
 from plotly import express as px
 from plotly import graph_objs as go
+import pandas as pd
 from flask import Response, request, render_template
 import datetime
 import calendar
@@ -188,7 +189,7 @@ def courses_and_workshops_graphs():
     labels = [config['label']['ended_courses'], config['label']['on_going_courses']]
     values = [total_ended_courses, total_on_going_courses]
 
-    course_pie_fig = px.pie(names=labels, values=values, title=config['title']['courses_and_workshops_pie_chart_title'])
+    course_pie_fig = px.pie(names=labels, values=values, title=config['title']['courses_and_workshops_status_pie_chart_title'])
     course_pie_fig.update_traces(textinfo='value', hovertemplate='%{value}')
     course_pie_fig.add_annotation(
         text=f"Total: {total_ended_courses + total_on_going_courses}",
@@ -217,60 +218,73 @@ def courses_and_workshops_graphs():
     values2 = [int(course) for course in yearly_by_month_payed_courses]
     values3 = [int(course) for course in yearly_by_month_free_courses]
 
-    dataBar1 = go.Bar(x=month_names, y=values2, name=config['label']['payed_courses'])
-    dataBar2 = go.Bar(x=month_names, y=values3, name=config['label']['free_courses'])
-    yearly_bar_fig = go.Figure(data=[dataBar1, dataBar2])
+    df = pd.DataFrame({
+        'Mes': month_names,
+        'Cursos y talleres pagados': values2,
+        'Cursos y talleres gratuitos': values3
+    })
+
+    yearly_bar_fig = px.bar(df, x='Mes', y=['Cursos y talleres pagados', 'Cursos y talleres gratuitos'], title=config['title']['courses_and_workshops_yearly_bar_chart_title'])
     yearly_bar_fig.update_layout(
-        template=plotly_template, 
-        barmode='group', 
-        xaxis_title='Mes', 
+        template=plotly_template,
+        xaxis_title='Mes',
         yaxis_title='Cursos y talleres'
-        )
+    )
+
     
     # 3rd Bar Chart -> In month daily payed and free course with 2 bars in y-axis
     days_of_the_month = [str(i) for i in range(1, len(monthly_by_day_payed_courses) + 1)]
     values4 = [int(course) for course in monthly_by_day_payed_courses]
     values5 = [int(course) for course in monthly_by_day_free_courses]
 
-    dataBar3 = go.Bar(x=days_of_the_month, y=values4, name=config['label']['payed_courses'])
-    dataBar4 = go.Bar(x=days_of_the_month, y=values5, name=config['label']['free_courses'])
-    monthly_bar_fig = go.Figure(data=[dataBar3, dataBar4])
+    df = pd.DataFrame({
+        'Día del mes': days_of_the_month,
+        'Cursos y talleres pagados': values4,
+        'Cursos y talleres gratuitos': values5
+    })
+
+    monthly_bar_fig = px.bar(df, x='Día del mes', y=['Cursos y talleres pagados', 'Cursos y talleres gratuitos'], title=config['title']['courses_and_workshops_monthly_bar_chart_title'])
     monthly_bar_fig.update_layout(
-        template=plotly_template, 
-        barmode='group', 
-        xaxis_title='Día del mes', 
+        template=plotly_template,
+        xaxis_title='Día del mes',
         yaxis_title='Cursos y talleres'
-        )
+    )
     
     # 4th Bar Chart -> In week payed and free course with 2 bars in y-axis
     days_of_the_week = days['es']
     values6 = [int(course) for course in weekly_payed_courses]
     values7 = [int(course) for course in weekly_free_courses]
 
-    dataBar5 = go.Bar(x=days_of_the_week, y=values6, name=config['label']['payed_courses'])
-    dataBar6 = go.Bar(x=days_of_the_week, y=values7, name=config['label']['free_courses'])
-    weekly_bar_fig = go.Figure(data=[dataBar5, dataBar6])
+    df = pd.DataFrame({
+        'Día de la semana': days_of_the_week,
+        'Cursos y talleres pagados': values6,
+        'Cursos y talleres gratuitos': values7
+    })
+
+    weekly_bar_fig = px.bar(df, x='Día de la semana', y=['Cursos y talleres pagados', 'Cursos y talleres gratuitos'], title=config['title']['courses_and_workshops_weekly_bar_chart_title'])
     weekly_bar_fig.update_layout(
-        template=plotly_template, 
-        barmode='group', 
-        xaxis_title='Día de la semana', 
+        template=plotly_template,
+        xaxis_title='Día de la semana',
         yaxis_title='Cursos y talleres'
-        )
+    )
     
     # 5th Bar Chart -> In day payed and free course with 2 bars in y-axis
     day_hours = [f"{hour:02d}h" for hour in range(24)]
     values8 = [int(daily_payed_courses[i]) if i < len(daily_payed_courses) else 0 for i in range(24)]
     values9 = [int(daily_free_courses[i]) if i < len(daily_free_courses) else 0 for i in range(24)]
 
-    dataBar7 = go.Bar(x=day_hours, y=values8, name=config['label']['payed_courses'])
-    dataBar8 = go.Bar(x=day_hours, y=values9, name=config['label']['free_courses'])
-    daily_bar_fig = go.Figure(data=[dataBar7, dataBar8])
+    df = pd.DataFrame({
+        'Hora': day_hours,
+        'Cursos y talleres pagados': values8,
+        'Cursos y talleres gratuitos': values9
+    })
+
+    daily_bar_fig = px.bar(df, x='Hora', y=['Cursos y talleres pagados', 'Cursos y talleres gratuitos'], title=config['title']['courses_and_workshops_daily_bar_chart_title'])
     daily_bar_fig.update_layout(
-        template=plotly_template, 
-        barmode='group', 
-        xaxis_title='Hora', 
+        template=plotly_template,
+        xaxis_title='Hora',
         yaxis_title='Cursos y talleres'
-        )
+    )
     
     graphs_list = [
         course_pie_fig.to_json(),
