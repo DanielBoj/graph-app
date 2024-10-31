@@ -14,6 +14,10 @@ title:
   daily_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas diarios"
   courses_and_workshops_status_pie_chart_title: "Estado anual de los cursos y talleres"
   courses_and_workshops_pie_chart_title: "Cursos y Talleres"
+  courses_and_workshops_yearly_bar_chart_title: "Cursos y talleres mensuales durante el año"
+  courses_and_workshops_monthly_bar_chart_title: "Cursos y talleres diarios durante el mes"
+  courses_and_workshops_weekly_bar_chart_title: "Cursos y talleres diarios durante la semana"
+  courses_and_workshops_daily_bar_chart_title: "Cursos y talleres diarios"
 
 
   bus_year_rides_pie_chart_title: "Viajes en bus anuales"
