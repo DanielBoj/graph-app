@@ -46,8 +46,8 @@ def city_key_enrollment_graphs():
     total_pie_fig.add_annotation(
         text=f"Total: {total_registered_enrollments + total_not_registered_enrollments}",
         showarrow=False,
-        x=0.75,
-        y=0.2
+        x=0.1,
+        y=0.0
     )
 
     total_pie_fig.update_layout(template=plotly_template)
@@ -194,8 +194,8 @@ def courses_and_workshops_graphs():
     course_pie_fig.add_annotation(
         text=f"Total: {total_ended_courses + total_on_going_courses}",
         showarrow=False,
-        x=0.75,
-        y=0.2
+        x=0.1,
+        y=0.0
     )
     course_pie_fig.update_layout(template=plotly_template)
 
@@ -208,8 +208,8 @@ def courses_and_workshops_graphs():
     total_pie_fig.add_annotation(
         text=f"Total: {total_year_payed_courses + total_year_free_courses}",
         showarrow=False,
-        x=0.75,
-        y=0.2
+        x=0.1,
+        y=0.0
     )
     total_pie_fig.update_layout(template=plotly_template)
 
