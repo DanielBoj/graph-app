@@ -106,6 +106,68 @@ def city_key_enrollment_graphs():
     return render_template('multiple_graphs_view.html', graphs=graphs_list)
 
 
+def recharges_and_bonus_uses_graphs():
+
+    payload = request.get_json()
+    total_monthly_purchases = payload['monthlyPurchases']
+    total_daily_by_month_purchases = payload['dailyByMonthPurchases']
+    total_weekly_purchases = payload['weeklyPurchases']
+    total_daily_purchases = payload['dailyPurchases']
+
+    # 1st Bar Chart -> Monthly Recharges and Bonus Uses
+    month_names = months['es']
+    values1 = [int(purchase) for purchase in total_monthly_purchases]
+
+    monthly_bar_fig = px.bar(x=month_names, y=values1, title=config['title']['monthly_recharges_and_bonus_uses_bar_chart_title'])
+    monthly_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Mes', 
+        yaxis_title='Recargas y usos de bono'
+        )
+    
+    # 2nd Bar Chart -> Daily by Month Recharges and Bonus Uses
+    days_of_the_month = [str(i) for i in range(1, len(total_daily_by_month_purchases) + 1)]
+    values2 = [int(purchase) for purchase in total_daily_by_month_purchases]
+
+    daily_by_month_bar_fig = px.bar(x=days_of_the_month, y=values2, title=config['title']['daily_by_month_recharges_and_bonus_uses_bar_chart_title'])
+    daily_by_month_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Día del mes', 
+        yaxis_title='Recargas y usos de bono'
+        )
+    
+    # 3rd Bar Chart -> Weekly Recharges and Bonus Uses
+    days_of_the_week = days['es']
+    values3 = [int(purchase) for purchase in total_weekly_purchases]
+
+    weekly_bar_fig = px.bar(x=days_of_the_week, y=values3, title=config['title']['weekly_recharges_and_bonus_uses_bar_chart_title'])
+    weekly_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Día de la semana', 
+        yaxis_title='Recargas y usos de bono'
+        )
+    
+    # 4th Bar Chart -> Daily Recharges and Bonus Uses
+    day_hours = [f"{hour:02d}h" for hour in range(24)]
+    values4 = [int(total_daily_purchases[i]) if i < len(total_daily_purchases) else 0 for i in range(24)]
+
+    daily_bar_fig = px.bar(x=day_hours, y=values4, title=config['title']['daily_recharges_and_bonus_uses_bar_chart_title'])
+    daily_bar_fig.update_layout(
+        template=plotly_template, 
+        xaxis_title='Hora', 
+        yaxis_title='Recargas y usos de bono'
+        )
+    
+    graphs_list = [
+        monthly_bar_fig.to_json(), 
+        daily_by_month_bar_fig.to_json(), 
+        weekly_bar_fig.to_json(), 
+        daily_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
 def bus_year_rides_pie_chart():
 
     payload = request.get_json()
@@ -272,8 +334,3 @@ short_months = {
     'es': ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     'en': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 }
-
-
-def test():
-
-    return render_template('test_endpoint.html')

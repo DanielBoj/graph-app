@@ -8,6 +8,10 @@ title:
   city_key_daily_enrollment_bar_chart_title: "Inscripciones diarias durante el mes en la Tarjeta Ciudadana"
   city_key_weekly_enrollment_bar_chart_title: "Inscripciones diarias durante la semana en la Tarjeta Ciudadana"
   city_key_dayly_enrollment_bar_chart_title: "Inscripciones del día en la Tarjeta Ciudadana"
+  monthly_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas mensuales"
+  daily_by_month_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas diarios durante el mes"
+  weekly_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas durante la semana"
+  daily_recharges_and_bonus_uses_bar_chart_title: "Usos de bonos y recargas diarios"
 
   bus_year_rides_pie_chart_title: "Viajes en bus anuales"
   bus_year_registered_rides_pie_chart_title: "Viajes en bus anuales de ciudadanos inscritos"
