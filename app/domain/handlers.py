@@ -46,7 +46,7 @@ def city_key_enrollment_graphs():
         text=f"Total: {total_registered_enrollments + total_not_registered_enrollments}",
         showarrow=False,
         x=0.75,
-        y=0.0
+        y=0.2
     )
 
     total_pie_fig.update_layout(template=plotly_template)
@@ -166,6 +166,123 @@ def recharges_and_bonus_uses_graphs():
     ]
 
     return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def courses_and_workshops_graphs():
+
+    payload = request.get_json()
+    total_ended_courses = payload.get('totalEndedCourses', 0)
+    total_on_going_courses = payload.get('totalOnCurseCourses', 0)
+    total_year_payed_courses = payload.get('totalYearPayedCourses', 0)
+    total_year_free_courses = payload.get('totalYearFreeCourses', 0)
+    yearly_by_month_payed_courses = payload['yearlyByMonthPayedCourses']
+    yearly_by_month_free_courses = payload['yearlyByMonthFreeCourses']
+    monthly_by_day_payed_courses = payload['monthlyByDayPayedCourses']
+    monthly_by_day_free_courses = payload['monthlyByDayFreeCourses']
+    weekly_payed_courses = payload['weeklyPayedCourses']
+    weekly_free_courses = payload['weeklyFreeCourses']
+    daily_payed_courses = payload['dailyPayedCourses']
+    daily_free_courses = payload['dailyFreeCourses']
+
+    # 1st Pie Chart -> Ended and On Going Courses
+    labels = [config['label']['ended_courses'], config['label']['on_going_courses']]
+    values = [total_ended_courses, total_on_going_courses]
+
+    course_pie_fig = px.pie(names=labels, values=values, title=config['title']['courses_and_workshops_pie_chart_title'])
+    course_pie_fig.update_traces(textinfo='value', hovertemplate='%{value}')
+    course_pie_fig.add_annotation(
+        text=f"Total: {total_ended_courses + total_on_going_courses}",
+        showarrow=False,
+        x=0.75,
+        y=0.2
+    )
+    course_pie_fig.update_layout(template=plotly_template)
+
+    # 2nd Pie Chart -> Total Payed and Free Courses
+    labels1 = [config['label']['payed_courses'], config['label']['free_courses']]
+    values1 = [total_year_payed_courses, total_year_free_courses]
+
+    total_pie_fig = px.pie(names=labels1, values=values1, title=config['title']['courses_and_workshops_pie_chart_title'])
+    total_pie_fig.update_traces(textinfo='value', hovertemplate='%{value}')
+    total_pie_fig.add_annotation(
+        text=f"Total: {total_year_payed_courses + total_year_free_courses}",
+        showarrow=False,
+        x=0.75,
+        y=0.2
+    )
+    total_pie_fig.update_layout(template=plotly_template)
+
+    # 2nd Bar Chart -> In year monthly payed and free course with 2 bars in y-axis
+    month_names = months['es']
+    values2 = [int(course) for course in yearly_by_month_payed_courses]
+    values3 = [int(course) for course in yearly_by_month_free_courses]
+
+    dataBar1 = go.Bar(x=month_names, y=values2, name=config['label']['payed_courses'])
+    dataBar2 = go.Bar(x=month_names, y=values3, name=config['label']['free_courses'])
+    yearly_bar_fig = go.Figure(data=[dataBar1, dataBar2])
+    yearly_bar_fig.update_layout(
+        template=plotly_template, 
+        barmode='group', 
+        xaxis_title='Mes', 
+        yaxis_title='Cursos y talleres'
+        )
+    
+    # 3rd Bar Chart -> In month daily payed and free course with 2 bars in y-axis
+    days_of_the_month = [str(i) for i in range(1, len(monthly_by_day_payed_courses) + 1)]
+    values4 = [int(course) for course in monthly_by_day_payed_courses]
+    values5 = [int(course) for course in monthly_by_day_free_courses]
+
+    dataBar3 = go.Bar(x=days_of_the_month, y=values4, name=config['label']['payed_courses'])
+    dataBar4 = go.Bar(x=days_of_the_month, y=values5, name=config['label']['free_courses'])
+    monthly_bar_fig = go.Figure(data=[dataBar3, dataBar4])
+    monthly_bar_fig.update_layout(
+        template=plotly_template, 
+        barmode='group', 
+        xaxis_title='Día del mes', 
+        yaxis_title='Cursos y talleres'
+        )
+    
+    # 4th Bar Chart -> In week payed and free course with 2 bars in y-axis
+    days_of_the_week = days['es']
+    values6 = [int(course) for course in weekly_payed_courses]
+    values7 = [int(course) for course in weekly_free_courses]
+
+    dataBar5 = go.Bar(x=days_of_the_week, y=values6, name=config['label']['payed_courses'])
+    dataBar6 = go.Bar(x=days_of_the_week, y=values7, name=config['label']['free_courses'])
+    weekly_bar_fig = go.Figure(data=[dataBar5, dataBar6])
+    weekly_bar_fig.update_layout(
+        template=plotly_template, 
+        barmode='group', 
+        xaxis_title='Día de la semana', 
+        yaxis_title='Cursos y talleres'
+        )
+    
+    # 5th Bar Chart -> In day payed and free course with 2 bars in y-axis
+    day_hours = [f"{hour:02d}h" for hour in range(24)]
+    values8 = [int(daily_payed_courses[i]) if i < len(daily_payed_courses) else 0 for i in range(24)]
+    values9 = [int(daily_free_courses[i]) if i < len(daily_free_courses) else 0 for i in range(24)]
+
+    dataBar7 = go.Bar(x=day_hours, y=values8, name=config['label']['payed_courses'])
+    dataBar8 = go.Bar(x=day_hours, y=values9, name=config['label']['free_courses'])
+    daily_bar_fig = go.Figure(data=[dataBar7, dataBar8])
+    daily_bar_fig.update_layout(
+        template=plotly_template, 
+        barmode='group', 
+        xaxis_title='Hora', 
+        yaxis_title='Cursos y talleres'
+        )
+    
+    graphs_list = [
+        course_pie_fig.to_json(),
+        total_pie_fig.to_json(),
+        yearly_bar_fig.to_json(),
+        monthly_bar_fig.to_json(),
+        weekly_bar_fig.to_json(),
+        daily_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
 
 
 def bus_year_rides_pie_chart():
