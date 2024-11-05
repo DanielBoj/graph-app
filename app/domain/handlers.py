@@ -21,6 +21,58 @@ plotly_template = "seaborn"
 
 def city_key_enrollment_graphs():
 
+    """
+    Este método devuelve los gráficos de inscripciones de la tarjeta ciudadana.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de inscripciones de la tarjeta ciudadana.
+          required: true
+          schema:
+            type: object
+            properties:
+                totalYearRegisteredEnrollments:
+                    type: integer
+                    description: Total de inscripciones de empadronados en el año.
+                totalYearNotRegisteredEnrollments:
+                    type: integer
+                    description: Total de inscripciones de no empadronados en el año.
+                yearlyEnrollment:
+                    type: array
+                    description: Inscripciones mensuales en el año.
+                    items:
+                        type: integer
+                monthlyEnrollment:
+                    type: array
+                    description: Inscripciones diarias en el mes.
+                    items:
+                        type: integer
+                weeklyEnrollment:
+                    type: array
+                    description: Inscripciones diarias en la semana.
+                    items:
+                        type: integer
+                dailyEnrollment:
+                    type: array
+                    description: Inscripciones por hora en el día.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de inscripciones de la tarjeta ciudadana.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de inscripciones de la tarjeta ciudadana.
+                                items:
+                                    type: json
+    """
+
     payload = request.get_json()
     total_registered_enrollments = payload.get('totalYearRegisteredEnrollments', 0)
     total_not_registered_enrollments = payload.get('totalYearNotRegisteredEnrollments', 0)
@@ -37,7 +89,7 @@ def city_key_enrollment_graphs():
 
     daily_enrollment = payload['dailyEnrollment']
 
-    # 1st Pie Chart -> Total Enrollments and Not Enrollments
+    # 1st Pie Chart -> Total Registered and Not Registered Enrollments
     labels1 = [config['label']['registered'], config['label']['not_registered']]
     values1 = [total_registered_enrollments, total_not_registered_enrollments]
 
@@ -109,6 +161,52 @@ def city_key_enrollment_graphs():
 
 def recharges_and_bonus_uses_graphs():
 
+    """
+    Este método devuelve los gráficos de recargas y usos de bono.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de recargas y usos de bono.
+          required: true
+          schema:
+            type: object
+            properties:
+                monthlyPurchases:
+                    type: array
+                    description: Recargas y usos de bono mensuales.
+                    items:
+                        type: integer
+                dailyByMonthPurchases:
+                    type: array
+                    description: Recargas y usos de bono diarios por mes.
+                    items:
+                        type: integer
+                weeklyPurchases:
+                    type: array
+                    description: Recargas y usos de bono semanales.
+                    items:
+                        type: integer
+                dailyPurchases:
+                    type: array
+                    description: Recargas y usos de bono diarios.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de recargas y usos de bono.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de recargas y usos de bono.
+                                items:
+                                    type: json
+    """
+
     payload = request.get_json()
     total_monthly_purchases = payload['monthlyPurchases']
     total_daily_by_month_purchases = payload['dailyByMonthPurchases']
@@ -171,6 +269,84 @@ def recharges_and_bonus_uses_graphs():
 
 def courses_and_workshops_graphs():
 
+    """
+    Este método devuelve los gráficos de cursos y talleres.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de cursos y talleres.
+          required: true
+          schema:
+            type: object
+            properties:
+                totalEndedCourses:
+                    type: integer
+                    description: Total de cursos finalizados.
+                totalOnCurseCourses:
+                    type: integer
+                    description: Total de cursos en curso.
+                totalYearPayedCourses:
+                    type: integer
+                    description: Total de cursos pagados en el año.
+                totalYearFreeCourses:
+                    type: integer
+                    description: Total de cursos gratuitos en el año.
+                yearlyByMonthPayedCourses:
+                    type: array
+                    description: Cursos pagados mensuales en el año.
+                    items:
+                        type: integer
+                yearlyByMonthFreeCourses:
+                    type: array
+                    description: Cursos gratuitos mensuales en el año.
+                    items:
+                        type: integer
+                monthlyByDayPayedCourses:
+                    type: array
+                    description: Cursos pagados diarios por mes.
+                    items:
+                        type: integer
+                monthlyByDayFreeCourses:
+                    type: array
+                    description: Cursos gratuitos diarios por mes.
+                    items:
+                        type: integer
+                weeklyPayedCourses:
+                    type: array
+                    description: Cursos pagados semanales.
+                    items:
+                        type: integer
+                weeklyFreeCourses:
+                    type: array
+                    description: Cursos gratuitos semanales.
+                    items:
+                        type: integer
+                dailyPayedCourses:
+                    type: array
+                    description: Cursos pagados diarios.
+                    items:
+                        type: integer
+                dailyFreeCourses:
+                    type: array
+                    description: Cursos gratuitos diarios.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de cursos y talleres.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de cursos y talleres.
+                                items:
+                                    type: json
+    """
+
     payload = request.get_json()
     total_ended_courses = payload.get('totalEndedCourses', 0)
     total_on_going_courses = payload.get('totalOnCurseCourses', 0)
@@ -213,7 +389,7 @@ def courses_and_workshops_graphs():
     )
     total_pie_fig.update_layout(template=plotly_template)
 
-    # 2nd Bar Chart -> In year monthly payed and free course with 2 bars in y-axis
+    # 3rd Bar Chart -> In year monthly payed and free course with 2 bars in y-axis
     month_names = months['es']
     values2 = [int(course) for course in yearly_by_month_payed_courses]
     values3 = [int(course) for course in yearly_by_month_free_courses]
@@ -232,7 +408,7 @@ def courses_and_workshops_graphs():
     )
 
     
-    # 3rd Bar Chart -> In month daily payed and free course with 2 bars in y-axis
+    # 4th Bar Chart -> In month daily payed and free course with 2 bars in y-axis
     days_of_the_month = [str(i) for i in range(1, len(monthly_by_day_payed_courses) + 1)]
     values4 = [int(course) for course in monthly_by_day_payed_courses]
     values5 = [int(course) for course in monthly_by_day_free_courses]
@@ -250,7 +426,7 @@ def courses_and_workshops_graphs():
         yaxis_title='Cursos y talleres'
     )
     
-    # 4th Bar Chart -> In week payed and free course with 2 bars in y-axis
+    # 5th Bar Chart -> In week payed and free course with 2 bars in y-axis
     days_of_the_week = days['es']
     values6 = [int(course) for course in weekly_payed_courses]
     values7 = [int(course) for course in weekly_free_courses]
@@ -268,7 +444,7 @@ def courses_and_workshops_graphs():
         yaxis_title='Cursos y talleres'
     )
     
-    # 5th Bar Chart -> In day payed and free course with 2 bars in y-axis
+    # 6th Bar Chart -> In day payed and free course with 2 bars in y-axis
     day_hours = [f"{hour:02d}h" for hour in range(24)]
     values8 = [int(daily_payed_courses[i]) if i < len(daily_payed_courses) else 0 for i in range(24)]
     values9 = [int(daily_free_courses[i]) if i < len(daily_free_courses) else 0 for i in range(24)]
@@ -300,6 +476,50 @@ def courses_and_workshops_graphs():
 
 
 def bus_year_rides_pie_chart():
+
+    """
+    Este método devuelve los gráficos de quesito relacionados con el servicio de bus urbano en cuanto a estadísticas anuales.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                totalRides:
+                    type: integer
+                    description: Total de viajes en bus.
+                inYearRides:
+                    type: integer
+                    description: Total de viajes en bus en el año.
+                totalRegistered:
+                    type: integer
+                    description: Total de viajes en bus de empadronados.
+                totalNotRegistered:
+                    type: integer
+                    description: Total de viajes en bus de no empadronados.
+                totalFisicalCardRides:
+                    type: integer
+                    description: Total de viajes en bus con tarjeta física.
+                totalVirtualCardRides:
+                    type: integer
+                    description: Total de viajes en bus con tarjeta virtual.
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
 
     payload = request.get_json()
     total_rides = payload.get('totalRides', 0)
@@ -342,6 +562,37 @@ def bus_year_rides_pie_chart():
 
 def annual_bus_rides_bar_chart():
 
+    """
+    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas anuales.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                rides:
+                    type: array
+                    description: Viajes en bus anuales.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
+
     actual_year = datetime.date.today().year
 
     payload = request.get_json()
@@ -362,6 +613,37 @@ def annual_bus_rides_bar_chart():
 
 
 def monthly_bus_rides_bar_chart():
+
+    """
+    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas mensuales.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                rides:
+                    type: array
+                    description: Viajes en bus mensuales.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
 
     payload = request.get_json()
     rides = payload['rides']
@@ -388,6 +670,37 @@ def monthly_bus_rides_bar_chart():
 
 def daily_by_month_bus_rides_bar_chart():
 
+    """
+    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas diarias por mes.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                rides:
+                    type: array
+                    description: Viajes en bus diarios por mes.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
+
     payload = request.get_json()
     rides = payload['rides']
 
@@ -406,6 +719,37 @@ def daily_by_month_bus_rides_bar_chart():
 
 
 def weekly_bus_rides_bar_chart():
+
+    """
+    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas semanales.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                rides:
+                    type: array
+                    description: Viajes en bus semanales.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
 
     payload = request.get_json()
     rides = payload['rides']
@@ -432,6 +776,37 @@ def weekly_bus_rides_bar_chart():
 
 
 def daily_bus_rides_bar_chart():
+
+    """
+    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas diarias.
+    ---
+    parameters:
+        - in: body
+          name: payload
+          description: Datos de uso del servicio de bus urbano.
+          required: true
+          schema:
+            type: object
+            properties:
+                rides:
+                    type: array
+                    description: Viajes en bus diarios.
+                    items:
+                        type: integer
+    responses:
+        200:
+            description: Gráficos de uso del servicio de bus urbano.
+            content:
+                application/json:
+                    schema:
+                        type: json
+                        properties:
+                            graphs:
+                                type: array
+                                description: Lista de gráficos de uso del servicio de bus urbano.
+                                items:
+                                    type: json
+    """
 
     payload = request.get_json()
     rides = payload['rides']

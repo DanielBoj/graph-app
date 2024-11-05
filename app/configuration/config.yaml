@@ -48,3 +48,7 @@ label:
   on_going_courses: "En curso"
   payed_courses: "De pago"
   free_courses: "Gratuitos"
+
+version:
+  version: "1.0.0"
+  date: "Fecha"

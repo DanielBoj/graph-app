@@ -1,0 +1,12 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: "API Gráficos de estadísticas de la Tarjeta Ciudadana"
+  description: "API para la visualización de gráficos de estadísticas de la Tarjeta Ciudadana: Registros, recargas y usos de bonos, talleres y cursos y mobilidad"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: "Daniel Boj"
+    email: "daniel@wdreams.com"
+# basePath: "https://graph-app.onrender.com/estadisticas-tarjeta-ciudadana/api/v1"
+# schemes:
+#   - "https"

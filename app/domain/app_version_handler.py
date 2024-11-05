@@ -5,6 +5,24 @@ from configuration.config_loader import config
 
 
 def app_version_handler():
+    """
+    Este método devuelve la versión de la aplicación cliente Android.
+    ---
+    responses:
+        200:
+            description: Versión de la aplicación cliente Android.
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            version:
+                                type: string
+                                description: Versión de la aplicación cliente Android.
+                            date:
+                                type: string
+                                description: Fecha de la versión de la aplicación cliente Android.
+    """
 
     app_version = {
         'version': config['app_version']['version'],
