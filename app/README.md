@@ -1,12 +1,40 @@
 # API de generación de gráficos de estadísticas de la Tarjeta Ciudadana
 ## Dependencias
-[Archivo de dependencias](./requirements.txt)
+aniso8601==9.0.1
+attrs==24.2.0
+blinker==1.8.2
+click==8.1.7
+dnspython==2.7.0
+flasgger==0.9.7.1
+Flask==3.0.3
+gunicorn==23.0.0
+itsdangerous==2.2.0
+Jinja2==3.1.4
+jsonschema==4.23.0
+jsonschema-specifications==2024.10.1
+kaleido==0.2.1
+Markdown==3.7
+MarkupSafe==3.0.2
+mistune==3.0.2
+numpy==2.1.3
+packaging==24.1
+pandas==2.2.3
+plotly==5.24.1
+python-dateutil==2.9.0.post0
+pytz==2024.2
+PyYAML==6.0.2
+referencing==0.35.1
+rpds-py==0.20.1
+six==1.16.0
+tenacity==9.0.0
+tzdata==2024.2
+Werkzeug==3.1.2
 
 ## Ruta Swagger
 `/apidocs/`
 
 ## Uso
-Test &rarr;
+### Desarrollo
 1. Navegar al directorio de la aplicación mediante `$ cd ./app` 
 2. Generar un entorno virtual con `$ pipenv shell`
 3. Instalar las dependencias con `$ pipenv install -r ./requirements.txt`
@@ -125,7 +153,7 @@ Test &rarr;
 }`
 - Retorno &rarr; Webview con un gráfico de barras con la cantidad de viajes realizados en cada día del mes
 
-### 8. Gráficos de barras de uso semanal del transporte público
+### 9. Gráficos de barras de uso semanal del transporte público
 - URL &rarr; `/bus/weekly`
 - Método &rarr; `POST`
 - Parámetros &rarr; JSON con claves:
@@ -134,7 +162,7 @@ Test &rarr;
 }`
 - Retorno &rarr; Webview con un gráfico de barras con la cantidad de viajes realizados en cada día de la semana
 
-### 9. Gráficos de barras de uso diario del transporte público
+### 10. Gráficos de barras de uso diario del transporte público
 - URL &rarr; `/bus/daily`
 - Método &rarr; `POST`
 - Parámetros &rarr; JSON con claves:
