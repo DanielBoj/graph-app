@@ -7,6 +7,11 @@ info:
   contact:
     name: "Daniel Boj"
     email: "daniel@wdreams.com"
-# basePath: "https://graph-app.onrender.com/estadisticas-tarjeta-ciudadana/api/v1"
-# schemes:
-#   - "https"
+basePath: "/estadisticas-tarjeta-ciudadana/api/v1"
+schemes:
+  - "http"
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"

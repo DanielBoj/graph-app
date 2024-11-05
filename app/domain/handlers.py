@@ -22,55 +22,7 @@ plotly_template = "seaborn"
 def city_key_enrollment_graphs():
 
     """
-    Este método devuelve los gráficos de inscripciones de la tarjeta ciudadana.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de inscripciones de la tarjeta ciudadana.
-          required: true
-          schema:
-            type: object
-            properties:
-                totalYearRegisteredEnrollments:
-                    type: integer
-                    description: Total de inscripciones de empadronados en el año.
-                totalYearNotRegisteredEnrollments:
-                    type: integer
-                    description: Total de inscripciones de no empadronados en el año.
-                yearlyEnrollment:
-                    type: array
-                    description: Inscripciones mensuales en el año.
-                    items:
-                        type: integer
-                monthlyEnrollment:
-                    type: array
-                    description: Inscripciones diarias en el mes.
-                    items:
-                        type: integer
-                weeklyEnrollment:
-                    type: array
-                    description: Inscripciones diarias en la semana.
-                    items:
-                        type: integer
-                dailyEnrollment:
-                    type: array
-                    description: Inscripciones por hora en el día.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de inscripciones de la tarjeta ciudadana.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de inscripciones de la tarjeta ciudadana.
-                                items:
-                                    type: json
+    file: ../swagger/post_enrollment.yml
     """
 
     payload = request.get_json()
@@ -162,49 +114,7 @@ def city_key_enrollment_graphs():
 def recharges_and_bonus_uses_graphs():
 
     """
-    Este método devuelve los gráficos de recargas y usos de bono.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de recargas y usos de bono.
-          required: true
-          schema:
-            type: object
-            properties:
-                monthlyPurchases:
-                    type: array
-                    description: Recargas y usos de bono mensuales.
-                    items:
-                        type: integer
-                dailyByMonthPurchases:
-                    type: array
-                    description: Recargas y usos de bono diarios por mes.
-                    items:
-                        type: integer
-                weeklyPurchases:
-                    type: array
-                    description: Recargas y usos de bono semanales.
-                    items:
-                        type: integer
-                dailyPurchases:
-                    type: array
-                    description: Recargas y usos de bono diarios.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de recargas y usos de bono.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de recargas y usos de bono.
-                                items:
-                                    type: json
+    file: ../swagger/post_purchases.yml
     """
 
     payload = request.get_json()
@@ -270,81 +180,7 @@ def recharges_and_bonus_uses_graphs():
 def courses_and_workshops_graphs():
 
     """
-    Este método devuelve los gráficos de cursos y talleres.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de cursos y talleres.
-          required: true
-          schema:
-            type: object
-            properties:
-                totalEndedCourses:
-                    type: integer
-                    description: Total de cursos finalizados.
-                totalOnCurseCourses:
-                    type: integer
-                    description: Total de cursos en curso.
-                totalYearPayedCourses:
-                    type: integer
-                    description: Total de cursos pagados en el año.
-                totalYearFreeCourses:
-                    type: integer
-                    description: Total de cursos gratuitos en el año.
-                yearlyByMonthPayedCourses:
-                    type: array
-                    description: Cursos pagados mensuales en el año.
-                    items:
-                        type: integer
-                yearlyByMonthFreeCourses:
-                    type: array
-                    description: Cursos gratuitos mensuales en el año.
-                    items:
-                        type: integer
-                monthlyByDayPayedCourses:
-                    type: array
-                    description: Cursos pagados diarios por mes.
-                    items:
-                        type: integer
-                monthlyByDayFreeCourses:
-                    type: array
-                    description: Cursos gratuitos diarios por mes.
-                    items:
-                        type: integer
-                weeklyPayedCourses:
-                    type: array
-                    description: Cursos pagados semanales.
-                    items:
-                        type: integer
-                weeklyFreeCourses:
-                    type: array
-                    description: Cursos gratuitos semanales.
-                    items:
-                        type: integer
-                dailyPayedCourses:
-                    type: array
-                    description: Cursos pagados diarios.
-                    items:
-                        type: integer
-                dailyFreeCourses:
-                    type: array
-                    description: Cursos gratuitos diarios.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de cursos y talleres.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de cursos y talleres.
-                                items:
-                                    type: json
+    file: ../swagger/post_courses.yml
     """
 
     payload = request.get_json()
@@ -478,48 +314,9 @@ def courses_and_workshops_graphs():
 def bus_year_rides_pie_chart():
 
     """
-    Este método devuelve los gráficos de quesito relacionados con el servicio de bus urbano en cuanto a estadísticas anuales.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                totalRides:
-                    type: integer
-                    description: Total de viajes en bus.
-                inYearRides:
-                    type: integer
-                    description: Total de viajes en bus en el año.
-                totalRegistered:
-                    type: integer
-                    description: Total de viajes en bus de empadronados.
-                totalNotRegistered:
-                    type: integer
-                    description: Total de viajes en bus de no empadronados.
-                totalFisicalCardRides:
-                    type: integer
-                    description: Total de viajes en bus con tarjeta física.
-                totalVirtualCardRides:
-                    type: integer
-                    description: Total de viajes en bus con tarjeta virtual.
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_total_year.yml
     """
+
 
     payload = request.get_json()
     total_rides = payload.get('totalRides', 0)
@@ -563,34 +360,7 @@ def bus_year_rides_pie_chart():
 def annual_bus_rides_bar_chart():
 
     """
-    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas anuales.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                rides:
-                    type: array
-                    description: Viajes en bus anuales.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_annual.yml
     """
 
     actual_year = datetime.date.today().year
@@ -615,34 +385,7 @@ def annual_bus_rides_bar_chart():
 def monthly_bus_rides_bar_chart():
 
     """
-    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas mensuales.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                rides:
-                    type: array
-                    description: Viajes en bus mensuales.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_monthly.yml
     """
 
     payload = request.get_json()
@@ -671,34 +414,7 @@ def monthly_bus_rides_bar_chart():
 def daily_by_month_bus_rides_bar_chart():
 
     """
-    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas diarias por mes.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                rides:
-                    type: array
-                    description: Viajes en bus diarios por mes.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_daily_by_month.yml
     """
 
     payload = request.get_json()
@@ -721,35 +437,9 @@ def daily_by_month_bus_rides_bar_chart():
 def weekly_bus_rides_bar_chart():
 
     """
-    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas semanales.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                rides:
-                    type: array
-                    description: Viajes en bus semanales.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_weekly.yml
     """
+
 
     payload = request.get_json()
     rides = payload['rides']
@@ -778,34 +468,7 @@ def weekly_bus_rides_bar_chart():
 def daily_bus_rides_bar_chart():
 
     """
-    Este método devuelve los gráficos de barras relacionados con el servicio de bus urbano en cuanto a estadísticas diarias.
-    ---
-    parameters:
-        - in: body
-          name: payload
-          description: Datos de uso del servicio de bus urbano.
-          required: true
-          schema:
-            type: object
-            properties:
-                rides:
-                    type: array
-                    description: Viajes en bus diarios.
-                    items:
-                        type: integer
-    responses:
-        200:
-            description: Gráficos de uso del servicio de bus urbano.
-            content:
-                application/json:
-                    schema:
-                        type: json
-                        properties:
-                            graphs:
-                                type: array
-                                description: Lista de gráficos de uso del servicio de bus urbano.
-                                items:
-                                    type: json
+    file: ../swagger/post_bus_daily.yml
     """
 
     payload = request.get_json()

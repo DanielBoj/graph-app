@@ -1,0 +1,76 @@
+Gráficos de cursos y talleres
+Este método devuelve los gráficos de cursos y talleres.
+---
+post:
+  tag: "courses"
+  parameters:
+    - in: "body"
+      name: "payload"
+      description: "Datos de cursos y talleres."
+      required: true
+      schema:
+        type: "object"
+        properties:
+          totalEndedCourses:
+            type: "integer"
+            description: "Total de cursos finalizados."
+          totalOnCurseCourses:
+            type: "integer"
+            description: "Total de cursos en curso."
+          totalYearPayedCourses:
+            type: "integer"
+            description: "Total de cursos pagados en el año."
+          totalYearFreeCourses:
+            type: "integer"
+            description: "Total de cursos gratuitos en el año."
+          yearlyByMonthPayedCourses:
+            type: "array"
+            description: "Cursos pagados mensuales en el año."
+            items:
+              type: "integer"
+          yearlyByMonthFreeCourses:
+            type: "array"
+            description: "Cursos gratuitos mensuales en el año."
+            items:
+              type: "integer"
+          monthlyByDayPayedCourses:
+            type: "array"
+            description: "Cursos pagados diarios por mes."
+            items:
+              type: "integer"
+          monthlyByDayFreeCourses:
+            type: "array"
+            description: "Cursos gratuitos diarios por mes."
+            items:
+              type: "integer"
+          weeklyPayedCourses:
+            type: "array"
+            description: "Cursos pagados semanales."
+            items:
+              type: "integer"
+          weeklyFreeCourses:
+            type: "array"
+            description: "Cursos gratuitos semanales."
+            items:
+              type: "integer"
+          dailyPayedCourses:
+            type: "array"
+            description: "Cursos pagados diarios."
+            items:
+              type: "integer"
+          dailyFreeCourses:
+            type: "array"
+            description: "Cursos gratuitos diarios."
+            items:
+              type: "integer"
+  responses:
+    200:
+      description: "Gráficos de cursos y talleres."
+      schema:
+        type: "json"
+        properties:
+          graphs:
+            type: "array"
+            description: "Lista de gráficos de cursos y talleres."
+            items:
+              type: "json"

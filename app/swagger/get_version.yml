@@ -1,0 +1,17 @@
+ Versión de la aplicación cliente Android
+ Este método devuelve la versión de la aplicación cliente Android.
+ ---
+ get:
+      tags: "version"
+      responses:
+        200:
+          description: "Versión de la aplicación cliente Android."
+          schema:
+            type: "object"
+            properties:
+              version:
+                type: "string"
+                description: "Versión de la aplicación cliente Android."
+              date:
+                type: "string"
+                description: "Fecha de la versión de la aplicación cliente Android."

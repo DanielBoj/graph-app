@@ -1,0 +1,29 @@
+Gráficos de uso del servicio de bus urbano
+Este método devuelve los gráficos de uso del servicio de bus urbano en cuanto a estadísticas semanales.
+---
+post:
+  tag: "bus"
+  parameters:
+    - in: "body"
+      name: "payload"
+      description: "Datos de uso del servicio de bus urbano."
+      required: true
+      schema:
+        type: "object"
+        properties:
+          rides:
+            type: "array"
+            description: "Viajes en bus semanales."
+            items:
+              type: "integer"
+  responses:
+    200:
+      description: "Gráficos de uso del servicio de bus urbano."
+      schema:
+        type: "json"
+        properties:
+          graphs:
+            type: "array"
+            description: "Lista de gráficos de uso del servicio de bus urbano."
+            items:
+              type: "json"

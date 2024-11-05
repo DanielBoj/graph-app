@@ -1,0 +1,44 @@
+Gráficos de recargas y usos de bono
+Este método devuelve los gráficos de recargas y usos de bono.
+---
+post:
+  tag: "purchases"
+  parameters:
+    - in: "body"
+      name: "payload"
+      description: "Datos de recargas y usos de bono."
+      required: true
+      schema:
+        type: "object"
+        properties:
+          monthlyPurchases:
+            type: "array"
+            description: "Recargas y usos de bono mensuales."
+            items:
+              type: "integer"
+          dailyByMonthPurchases:
+            type: "array"
+            description: "Recargas y usos de bono diarios por mes."
+            items:
+              type: "integer"
+          weeklyPurchases:
+            type: "array"
+            description: "Recargas y usos de bono semanales."
+            items:
+              type: "integer"
+          dailyPurchases:
+            type: "array"
+            description: "Recargas y usos de bono diarios."
+            items:
+              type: "integer"
+  responses:
+    200:
+      description: "Gráficos de recargas y usos de bono."
+      schema:
+        type: "json"
+        properties:
+          graphs:
+            type: "array"
+            description: "Lista de gráficos de recargas y usos de bono."
+            items:
+              type: "json"

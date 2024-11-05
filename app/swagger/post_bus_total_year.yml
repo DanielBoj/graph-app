@@ -1,0 +1,42 @@
+Gráficos de uso del servicio de bus urbano
+Este método devuelve los gráficos de uso del servicio de bus urbano.
+---
+post:
+  tag: "bus"
+  parameters:
+    - in: "body"
+      name: "payload"
+      description: "Datos de uso del servicio de bus urbano."
+      required: true
+      schema:
+        type: "object"
+        properties:
+          totalRides:
+            type: "integer"
+            description: "Total de viajes en bus."
+          inYearRides:
+            type: "integer"
+            description: "Total de viajes en bus en el año."
+          totalRegistered:
+            type: "integer"
+            description: "Total de viajes en bus de empadronados."
+          totalNotRegistered:
+            type: "integer"
+            description: "Total de viajes en bus de no empadronados."
+          totalFisicalCardRides:
+            type: "integer"
+            description: "Total de viajes en bus con tarjeta física."
+          totalVirtualCardRides:
+            type: "integer"
+            description: "Total de viajes en bus con tarjeta virtual."
+  responses:
+    200:
+      description: "Gráficos de uso del servicio de bus urbano."
+      schema:
+        type: "json"
+        properties:
+          graphs:
+            type: "array"
+            description: "Lista de gráficos de uso del servicio de bus urbano."
+            items:
+              type: "json"
