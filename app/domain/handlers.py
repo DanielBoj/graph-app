@@ -29,18 +29,6 @@ def city_key_enrollment_graphs():
     total_registered_enrollments = payload.get('totalYearRegisteredEnrollments', 0)
     total_not_registered_enrollments = payload.get('totalYearNotRegisteredEnrollments', 0)
 
-    yearly_enrollment = payload['yearlyEnrollment']
-    while len(yearly_enrollment) < 12:
-        yearly_enrollment.append(0)
-
-    monthly_enrollment = payload['monthlyEnrollment']
-
-    weekly_enrollment = payload['weeklyEnrollment']
-    while len(weekly_enrollment) < 7:
-        weekly_enrollment.append(0)
-
-    daily_enrollment = payload['dailyEnrollment']
-
     # 1st Pie Chart -> Total Registered and Not Registered Enrollments
     labels1 = [config['label']['registered'], config['label']['not_registered']]
     values1 = [total_registered_enrollments, total_not_registered_enrollments]
@@ -55,8 +43,21 @@ def city_key_enrollment_graphs():
     )
 
     total_pie_fig.update_layout(template=plotly_template)
+    
+    graphs_list = [
+        total_pie_fig.to_json(), 
+    ]
 
-    # 2nd Bar Chart -> In year monthly enrollments
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def in_year_monthly_enrollments():
+
+    payload = request.get_json()
+    yearly_enrollment = payload['yearlyEnrollment']
+    while len(yearly_enrollment) < 12:
+        yearly_enrollment.append(0)
+
     month_names = months['es']
     values2 = [int(enrollment) for enrollment in yearly_enrollment]
 
@@ -67,7 +68,18 @@ def city_key_enrollment_graphs():
         yaxis_title='Inscripciones'
         )
     
-    # 3rd Bar Chart -> In month daily enrollments
+    graphs_list = [
+        yearly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def in_month_daily_enrollments():
+
+    payload = request.get_json()
+    monthly_enrollment = payload['monthlyEnrollment']
+
     days_of_the_month = [str(i) for i in range(1, len(monthly_enrollment) + 1)]
     values3 = [int(enrollment) for enrollment in monthly_enrollment]
 
@@ -78,7 +90,20 @@ def city_key_enrollment_graphs():
         yaxis_title='Inscripciones'
         )
     
-    # 4th Bar Chart -> In week daily enrollments
+    graphs_list = [
+        monthly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def weekly_enrollments():
+
+    payload = request.get_json()
+    weekly_enrollment = payload['weeklyEnrollment']
+    while len(weekly_enrollment) < 7:
+        weekly_enrollment.append(0)
+
     days_of_the_week = days['es']
     values4 = [int(enrollment) for enrollment in weekly_enrollment]
 
@@ -89,7 +114,19 @@ def city_key_enrollment_graphs():
         yaxis_title='Inscripciones'
         )
     
-    # 5th Bar Chart -> In day enrollment
+    graphs_list = [
+        weekly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def daily_enrollments():
+
+    payload = request.get_json()
+
+    daily_enrollment = payload['dailyEnrollment']
+
     day_hours = [f"{hour:02d}h" for hour in range(24)]
     values5 = [int(daily_enrollment[i]) if i < len(daily_enrollment) else 0 for i in range(24)]
 
@@ -101,10 +138,6 @@ def city_key_enrollment_graphs():
         )
     
     graphs_list = [
-        total_pie_fig.to_json(), 
-        yearly_bar_fig.to_json(), 
-        monthly_bar_fig.to_json(), 
-        weekly_bar_fig.to_json(), 
         day_bar_fig.to_json()
     ]
 
@@ -119,11 +152,7 @@ def recharges_and_bonus_uses_graphs():
 
     payload = request.get_json()
     total_monthly_purchases = payload['monthlyPurchases']
-    total_daily_by_month_purchases = payload['dailyByMonthPurchases']
-    total_weekly_purchases = payload['weeklyPurchases']
-    total_daily_purchases = payload['dailyPurchases']
 
-    # 1st Bar Chart -> Monthly Recharges and Bonus Uses
     month_names = months['es']
     values1 = [int(purchase) for purchase in total_monthly_purchases]
 
@@ -134,7 +163,20 @@ def recharges_and_bonus_uses_graphs():
         yaxis_title='Recargas y usos de bono'
         )
     
-    # 2nd Bar Chart -> Daily by Month Recharges and Bonus Uses
+    
+    
+    graphs_list = [
+        monthly_bar_fig.to_json(), 
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def daily_by_month_recharges_and_bonus_uses():
+
+    payload = request.get_json()
+    total_daily_by_month_purchases = payload['dailyByMonthPurchases']
+
     days_of_the_month = [str(i) for i in range(1, len(total_daily_by_month_purchases) + 1)]
     values2 = [int(purchase) for purchase in total_daily_by_month_purchases]
 
@@ -145,7 +187,18 @@ def recharges_and_bonus_uses_graphs():
         yaxis_title='Recargas y usos de bono'
         )
     
-    # 3rd Bar Chart -> Weekly Recharges and Bonus Uses
+    graphs_list = [
+        daily_by_month_bar_fig.to_json
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def weekly_recharges_and_bonus_uses():
+
+    payload = request.get_json()
+    total_weekly_purchases = payload['weeklyPurchases']
+    
     days_of_the_week = days['es']
     values3 = [int(purchase) for purchase in total_weekly_purchases]
 
@@ -156,7 +209,18 @@ def recharges_and_bonus_uses_graphs():
         yaxis_title='Recargas y usos de bono'
         )
     
-    # 4th Bar Chart -> Daily Recharges and Bonus Uses
+    graphs_list = [
+        weekly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def daily_recharges_and_bonus_uses():
+
+    payload = request.get_json()
+    total_daily_purchases = payload['dailyPurchases']
+    
     day_hours = [f"{hour:02d}h" for hour in range(24)]
     values4 = [int(total_daily_purchases[i]) if i < len(total_daily_purchases) else 0 for i in range(24)]
 
@@ -168,9 +232,6 @@ def recharges_and_bonus_uses_graphs():
         )
     
     graphs_list = [
-        monthly_bar_fig.to_json(), 
-        daily_by_month_bar_fig.to_json(), 
-        weekly_bar_fig.to_json(), 
         daily_bar_fig.to_json()
     ]
 
@@ -188,14 +249,6 @@ def courses_and_workshops_graphs():
     total_on_going_courses = payload.get('totalOnCurseCourses', 0)
     total_year_payed_courses = payload.get('totalYearPayedCourses', 0)
     total_year_free_courses = payload.get('totalYearFreeCourses', 0)
-    yearly_by_month_payed_courses = payload['yearlyByMonthPayedCourses']
-    yearly_by_month_free_courses = payload['yearlyByMonthFreeCourses']
-    monthly_by_day_payed_courses = payload['monthlyByDayPayedCourses']
-    monthly_by_day_free_courses = payload['monthlyByDayFreeCourses']
-    weekly_payed_courses = payload['weeklyPayedCourses']
-    weekly_free_courses = payload['weeklyFreeCourses']
-    daily_payed_courses = payload['dailyPayedCourses']
-    daily_free_courses = payload['dailyFreeCourses']
 
     # 1st Pie Chart -> Ended and On Going Courses
     labels = [config['label']['ended_courses'], config['label']['on_going_courses']]
@@ -224,8 +277,21 @@ def courses_and_workshops_graphs():
         y=0.0
     )
     total_pie_fig.update_layout(template=plotly_template)
+    
+    graphs_list = [
+        course_pie_fig.to_json(),
+        total_pie_fig.to_json(),
+    ]
 
-    # 3rd Bar Chart -> In year monthly payed and free course with 2 bars in y-axis
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def yearly_courses_bar_chart():
+
+    payload = request.get_json()
+    yearly_by_month_payed_courses = payload['yearlyByMonthPayedCourses']
+    yearly_by_month_free_courses = payload['yearlyByMonthFreeCourses']
+
     month_names = months['es']
     values2 = [int(course) for course in yearly_by_month_payed_courses]
     values3 = [int(course) for course in yearly_by_month_free_courses]
@@ -243,8 +309,19 @@ def courses_and_workshops_graphs():
         yaxis_title='Cursos y talleres'
     )
 
-    
-    # 4th Bar Chart -> In month daily payed and free course with 2 bars in y-axis
+    graphs_list = [
+        yearly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def monthly_courses_bar_chart():
+
+    payload = request.get_json()
+    monthly_by_day_payed_courses = payload['monthlyByDayPayedCourses']
+    monthly_by_day_free_courses = payload['monthlyByDayFreeCourses']
+
     days_of_the_month = [str(i) for i in range(1, len(monthly_by_day_payed_courses) + 1)]
     values4 = [int(course) for course in monthly_by_day_payed_courses]
     values5 = [int(course) for course in monthly_by_day_free_courses]
@@ -261,8 +338,20 @@ def courses_and_workshops_graphs():
         xaxis_title='Día del mes',
         yaxis_title='Cursos y talleres'
     )
-    
-    # 5th Bar Chart -> In week payed and free course with 2 bars in y-axis
+
+    graphs_list = [
+        monthly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
+
+
+def weekly_courses_bar_chart():   
+
+    payload = request.get_json()
+    weekly_payed_courses = payload['weeklyPayedCourses']
+    weekly_free_courses = payload['weeklyFreeCourses']
+
     days_of_the_week = days['es']
     values6 = [int(course) for course in weekly_payed_courses]
     values7 = [int(course) for course in weekly_free_courses]
@@ -279,8 +368,20 @@ def courses_and_workshops_graphs():
         xaxis_title='Día de la semana',
         yaxis_title='Cursos y talleres'
     )
+
+    graphs_list = [
+        weekly_bar_fig.to_json()
+    ]
+
+    return render_template('multiple_graphs_view.html', graphs=graphs_list)
     
-    # 6th Bar Chart -> In day payed and free course with 2 bars in y-axis
+
+def daily_courses_bar_chart():
+
+    payload = request.get_json()
+    daily_payed_courses = payload['dailyPayedCourses']
+    daily_free_courses = payload['dailyFreeCourses']
+
     day_hours = [f"{hour:02d}h" for hour in range(24)]
     values8 = [int(daily_payed_courses[i]) if i < len(daily_payed_courses) else 0 for i in range(24)]
     values9 = [int(daily_free_courses[i]) if i < len(daily_free_courses) else 0 for i in range(24)]
@@ -297,18 +398,12 @@ def courses_and_workshops_graphs():
         xaxis_title='Hora',
         yaxis_title='Cursos y talleres'
     )
-    
+
     graphs_list = [
-        course_pie_fig.to_json(),
-        total_pie_fig.to_json(),
-        yearly_bar_fig.to_json(),
-        monthly_bar_fig.to_json(),
-        weekly_bar_fig.to_json(),
         daily_bar_fig.to_json()
     ]
 
     return render_template('multiple_graphs_view.html', graphs=graphs_list)
-
 
 
 def bus_year_rides_pie_chart():
